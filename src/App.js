@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Client } from "boardgame.io/react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const NUM_CHECKERS = 4;
+
+const Parchis = {
+  setup: () => ({
+    board: {
+      cells: Array(63).fill(null),
+      homeCells: {
+        red: Array(8).fill(null),
+        green: Array(8).fill(null),
+        blue: Array(8).fill(null),
+        yellow: Array(8).fill(null)
+      },
+      homeCheckers: {
+        red: NUM_CHECKERS,
+        green: NUM_CHECKERS,
+        blue: NUM_CHECKERS,
+        yellow: NUM_CHECKERS
+      }
+    }
+  }),
+
+  moves: {
+    dice: (G, ctx, id) => {
+      G.board.cells[id] = ctx.currentPlayer;
+    }
+  }
+};
+
+const App = Client({ game: Parchis });
 
 export default App;
